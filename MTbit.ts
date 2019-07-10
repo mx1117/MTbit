@@ -52,8 +52,8 @@ namespace MTbit {
 
 
     export enum Motors {
-        M1 = 0x01,
-        M2 = 0x02,
+        M1 = 0x02,
+        M2 = 0x01,
     }
 
 
@@ -252,7 +252,7 @@ namespace MTbit {
         pins.digitalWritePin(DigitalPin.P14, 0)
 
         // read pulse
-        let d = pins.P15.pulseIn(PulseValue.High, 25000);
+        let d = pins.P16.pulseIn(PulseValue.High, 25000);
         let ret = d;
         // filter timeout spikes
         if (ret == 0 && distanceBuf != 0) {
@@ -291,13 +291,13 @@ namespace MTbit {
     //% weight=100
     export function AD_PWM_Write(index: Normal_Ports, pwm_val: number): void {
         if (index == 0x01) {
-            pins.analogWritePin(AnalogPin.P8, pwm_val)
+            pins.analogWritePin(AnalogPin.P0, pwm_val)
         } else if (index == 0x02) {
-            pins.analogWritePin(AnalogPin.P12, pwm_val)
+            pins.analogWritePin(AnalogPin.P1, pwm_val)
         } else if (index == 0x03) {
-            pins.analogWritePin(AnalogPin.P13, pwm_val)
+            pins.analogWritePin(AnalogPin.P2, pwm_val)
         } else if (index == 0x04) {
-            pins.analogWritePin(AnalogPin.P16, pwm_val)
+            pins.analogWritePin(AnalogPin.P3, pwm_val)
         }
     }
 
@@ -308,13 +308,13 @@ namespace MTbit {
     //% weight=100
     export function Digtal_Write(index: Normal_Ports, do_val: number): void {
         if (index == 0x01) {
-            pins.digitalWritePin(DigitalPin.P8, do_val)
+            pins.digitalWritePin(DigitalPin.P15, do_val)
         } else if (index == 0x02) {
             pins.digitalWritePin(DigitalPin.P12, do_val)
         } else if (index == 0x03) {
             pins.digitalWritePin(DigitalPin.P13, do_val)
         } else if (index == 0x04) {
-            pins.digitalWritePin(DigitalPin.P16, do_val)
+            pins.digitalWritePin(DigitalPin.P8, do_val)
         }
     }
 
@@ -326,13 +326,13 @@ namespace MTbit {
     export function Digtal_Read(index: Normal_Ports): number {
         let val = 0
         if (index == 0x01) {
-            val = pins.digitalReadPin(DigitalPin.P0)
+            val = pins.digitalReadPin(DigitalPin.P15)
         } else if (index == 0x02) {
-            val = pins.digitalReadPin(DigitalPin.P1)
+            val = pins.digitalReadPin(DigitalPin.P12)
         } else if (index == 0x03) {
-            val = pins.digitalReadPin(DigitalPin.P2)
+            val = pins.digitalReadPin(DigitalPin.P13)
         } else if (index == 0x04) {
-            val = pins.digitalReadPin(DigitalPin.P3)
+            val = pins.digitalReadPin(DigitalPin.P8)
         }
         return val
 
@@ -350,7 +350,7 @@ namespace MTbit {
             if(index1 == 0x01){
                 val = pins.digitalReadPin(DigitalPin.P0)
             }else{
-                val = pins.digitalReadPin(DigitalPin.P8)
+                val = pins.digitalReadPin(DigitalPin.P15)
             }
             
         } else if (index == 0x02) {
@@ -371,7 +371,7 @@ namespace MTbit {
             if(index1 == 0x01){
                 val = pins.digitalReadPin(DigitalPin.P3)
             }else{
-                val = pins.digitalReadPin(DigitalPin.P16)
+                val = pins.digitalReadPin(DigitalPin.P8)
             }
         }
         return val
