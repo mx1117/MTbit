@@ -42,11 +42,11 @@ namespace MTbit {
     }
 
     export enum Servos {
-        S1 = 0x0b,
+        S1 = 0x0d,
         S2 = 0x0a,
         S3 = 0x0e,
-        S4 = 0x0f,
-        U1 = 0x0d,
+        S4 = 0x0b,
+        U1 = 0x0f,
         I1 = 0x0c,
     }
 
@@ -399,7 +399,7 @@ namespace MTbit {
         if (index == 0x01) {
             pins.analogWritePin(AnalogPin.P0, R_val)
             pins.analogWritePin(AnalogPin.P15, G_val)
-            setPwm(0x0b, 0, B_val)
+            setPwm(0x0d, 0, B_val)
         } else if (index == 0x02) {
             pins.analogWritePin(AnalogPin.P1, R_val)
             pins.analogWritePin(AnalogPin.P12, G_val)
@@ -411,9 +411,8 @@ namespace MTbit {
         } else if (index == 0x04) {
             pins.analogWritePin(AnalogPin.P3, R_val)
             pins.analogWritePin(AnalogPin.P8, G_val)
-            setPwm(0x0f, 0, B_val)
+            setPwm(0x0b, 0, B_val)
         }
     }
 
 }
-
