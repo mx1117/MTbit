@@ -1,6 +1,6 @@
 {
     "name": "MTbit",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "description": "makecode package for MTbit",
     "license": "MIT",
     "dependencies": {

@@ -382,15 +382,15 @@ namespace MTbit {
      * RGB传感器
      */
     //% blockId=MTbit_RGB block="RGB|%index|,Red %R_val,Green %G_val,Blue %B_val"
-    //% R_val.min=0 R_val.max=255
-    //% G_val.min=0 G_val.max=255
-    //% B_val.min=0 B_val.max=255
+    //% R_val.min=0 R_val.max=1023
+    //% G_val.min=0 G_val.max=1023
+    //% B_val.min=0 B_val.max=1023
     //% weight=100
     export function RGB(index: Normal_Ports, R_val: number,G_val: number, B_val: number): void {
         if (!initialized) {
             initPCA9685()
         }
-        B_val = B_val*16;
+        B_val = B_val*4;
         if (B_val >= 4096) {
             B_val = 4095
         }else if (B_val <= -4096) {
