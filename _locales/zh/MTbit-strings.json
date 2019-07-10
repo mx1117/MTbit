@@ -11,5 +11,6 @@
 	"MTbit.AD_PWM_Write|block": "模拟PWM输出|%index|，值 %pwm_val",
 	"MTbit.Digtal_Write|block": "数字信号输出|%index|，值 %do_val",
 	"MTbit.TrackerIn_Read|block": "寻迹|%index|,|%index1|通道",
-	"MTbit.Digtal_Read|block": "数字信号读取|%index|"
+	"MTbit.Digtal_Read|block": "数字信号读取|%index|",
+	"MTbit.RGB|block":"RGB|%index|,红色 %R_val,绿色 %G_val,蓝色 %B_val"
 }

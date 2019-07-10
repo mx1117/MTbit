@@ -381,7 +381,7 @@ namespace MTbit {
     /**
      * RGB传感器
      */
-    //% blockId=MTbit_ad_write block="RGB|%index|,Red %R_val,Green %G_val,Blue %B_val"
+    //% blockId=MTbit_RGB block="RGB|%index|,Red %R_val,Green %G_val,Blue %B_val"
     //% R_val.min=0 R_val.max=255
     //% G_val.min=0 G_val.max=255
     //% B_val.min=0 B_val.max=255
@@ -401,16 +401,16 @@ namespace MTbit {
             pins.analogWritePin(AnalogPin.P15, G_val)
             setPwm(0x0b, 0, B_val)
         } else if (index == 0x02) {
-            pins.analogWritePin(AnalogPin.P1, pwm_val)
-            pins.analogWritePin(AnalogPin.P12, pwm_val)
+            pins.analogWritePin(AnalogPin.P1, R_val)
+            pins.analogWritePin(AnalogPin.P12, G_val)
             setPwm(0x0a, 0, B_val)
         } else if (index == 0x03) {
-            pins.analogWritePin(AnalogPin.P2, pwm_val)
-            pins.analogWritePin(AnalogPin.P13, pwm_val)
+            pins.analogWritePin(AnalogPin.P2, R_val)
+            pins.analogWritePin(AnalogPin.P13, G_val)
             setPwm(0x0e, 0, B_val)
         } else if (index == 0x04) {
-            pins.analogWritePin(AnalogPin.P3, pwm_val)
-            pins.analogWritePin(AnalogPin.P8, pwm_val)
+            pins.analogWritePin(AnalogPin.P3, R_val)
+            pins.analogWritePin(AnalogPin.P8, G_val)
             setPwm(0x0f, 0, B_val)
         }
     }
