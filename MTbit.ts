@@ -386,7 +386,7 @@ namespace MTbit {
     //% G_val.min=0 G_val.max=255
     //% B_val.min=0 B_val.max=255
     //% weight=100
-    export function AD_PWM_Write(index: Normal_Ports, R_val: number,G_val: number, B_val: number): void {
+    export function RGB(index: Normal_Ports, R_val: number,G_val: number, B_val: number): void {
         if (!initialized) {
             initPCA9685()
         }
