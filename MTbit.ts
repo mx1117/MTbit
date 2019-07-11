@@ -34,6 +34,28 @@ namespace MTbit {
         S2 = 0x02,
         S3 = 0x03,
         S4 = 0x04,
+        U1 = 0x0f,
+    }
+
+    export enum ADRead_Ports{
+        S1 = 0x01,
+        S2 = 0x02,
+        S3 = 0x03,
+    }
+
+
+    export enum ADWrite_Ports{
+        S1 = 0x01,
+        S2 = 0x02,
+        S3 = 0x03,
+        U1 = 0x0f,
+    }
+
+    export enum RGB_Ports{
+        S1 = 0x01,
+        S2 = 0x02,
+        S3 = 0x03,
+        U1 = 0x0f,
     }
 
     export enum Tracker_direction {
@@ -268,7 +290,7 @@ namespace MTbit {
      */
     //% blockId=MTbit_ad_read block="AD_sensor_Read|%index|"
     //% weight=100
-    export function AD_sensor_Read(index: Normal_Ports): number {
+    export function AD_sensor_Read(index: ADRead_Ports): number {
         let val = 0
         if (index == 0x01) {
             val = pins.analogReadPin(AnalogPin.P0)
@@ -276,8 +298,6 @@ namespace MTbit {
             val = pins.analogReadPin(AnalogPin.P1)
         } else if (index == 0x03) {
             val = pins.analogReadPin(AnalogPin.P2)
-        } else if (index == 0x04) {
-            val = pins.analogReadPin(AnalogPin.P3)
         }
         return val
     }
@@ -288,15 +308,15 @@ namespace MTbit {
      */
     //% blockId=MTbit_ad_write block="AD_PWM_Write|%index|,value %pwm_val"
     //% weight=100
-    export function AD_PWM_Write(index: Normal_Ports, pwm_val: number): void {
+    export function AD_PWM_Write(index: ADWrite_Ports, pwm_val: number): void {
         if (index == 0x01) {
             pins.analogWritePin(AnalogPin.P0, pwm_val)
         } else if (index == 0x02) {
             pins.analogWritePin(AnalogPin.P1, pwm_val)
         } else if (index == 0x03) {
             pins.analogWritePin(AnalogPin.P2, pwm_val)
-        } else if (index == 0x04) {
-            pins.analogWritePin(AnalogPin.P3, pwm_val)
+        } else if (index == 0x0f) {
+            pins.analogWritePin(AnalogPin.P14, pwm_val)
         }
     }
 
@@ -314,6 +334,8 @@ namespace MTbit {
             pins.digitalWritePin(DigitalPin.P13, do_val)
         } else if (index == 0x04) {
             pins.digitalWritePin(DigitalPin.P8, do_val)
+        } else if (index == 0x0f) {
+            pins.digitalWritePin(DigitalPin.P16, do_val)
         }
     }
 
@@ -332,6 +354,8 @@ namespace MTbit {
             val = pins.digitalReadPin(DigitalPin.P13)
         } else if (index == 0x04) {
             val = pins.digitalReadPin(DigitalPin.P8)
+        } else if (index == 0x0f) {
+            val = pins.digitalReadPin(DigitalPin.P16)
         }
         return val
 
@@ -372,6 +396,12 @@ namespace MTbit {
             }else{
                 val = pins.digitalReadPin(DigitalPin.P8)
             }
+        } else if (index == 0x0f) {
+            if(index1 == 0x01){
+                val = pins.digitalReadPin(DigitalPin.P14)
+            }else{
+                val = pins.digitalReadPin(DigitalPin.P16)
+            }
         }
         return val
 
@@ -386,15 +416,13 @@ namespace MTbit {
     //% G_val.min=0 G_val.max=1023
     //% B_val.min=0 B_val.max=1023
     //% weight=100
-    export function RGB(index: Normal_Ports, R_val: number,G_val: number, B_val: number): void {
+    export function RGB(index: RGB_Ports, R_val: number,G_val: number, B_val: number): void {
         if (!initialized) {
             initPCA9685()
         }
         B_val = B_val*4;
         if (B_val >= 4096) {
             B_val = 4095
-        }else if (B_val <= -4096) {
-            B_val = -4095
         }
         if (index == 0x01) {
             pins.analogWritePin(AnalogPin.P0, R_val)
@@ -408,10 +436,10 @@ namespace MTbit {
             pins.analogWritePin(AnalogPin.P2, R_val)
             pins.analogWritePin(AnalogPin.P13, G_val)
             setPwm(0x0e, 0, B_val)
-        } else if (index == 0x04) {
-            pins.analogWritePin(AnalogPin.P3, R_val)
-            pins.analogWritePin(AnalogPin.P8, G_val)
-            setPwm(0x0b, 0, B_val)
+        }else if (index == 0x0f) {
+            pins.analogWritePin(AnalogPin.P14, R_val)
+            pins.analogWritePin(AnalogPin.P16, G_val)
+            setPwm(0x0f, 0, B_val)
         }
     }
 
