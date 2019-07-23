@@ -104,12 +104,22 @@ namespace MTbit {
         return val;
     }
 
-    function initPCA9685(): void {
+    function initMT(): void {
         i2cwrite(PCA9685_ADDRESS, MODE1, 0x00)
         setFreq(50);
         for (let idx = 0; idx < 16; idx++) {
             setPwm(idx, 0, 0);
         }
+        pins.setPull(DigitalPin.P0, PinPullMode.PullUp)
+        pins.setPull(DigitalPin.P1, PinPullMode.PullUp)
+        pins.setPull(DigitalPin.P2, PinPullMode.PullUp)
+        pins.setPull(DigitalPin.P3, PinPullMode.PullUp)
+        pins.setPull(DigitalPin.P8, PinPullMode.PullUp)
+        pins.setPull(DigitalPin.P12, PinPullMode.PullUp)
+        pins.setPull(DigitalPin.P13, PinPullMode.PullUp)
+        pins.setPull(DigitalPin.P14, PinPullMode.PullUp)
+        pins.setPull(DigitalPin.P15, PinPullMode.PullUp)
+        pins.setPull(DigitalPin.P16, PinPullMode.PullUp)
         initialized = true
     }
 
@@ -161,7 +171,7 @@ namespace MTbit {
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
     export function Servo(index: Servos, degree: number): void {
         if (!initialized) {
-            initPCA9685()
+            initMT()
         }
         // 50hz: 20,000 us
         let v_us = (degree * 1800 / 180 + 600) // 0.6 ~ 2.4
@@ -181,7 +191,7 @@ namespace MTbit {
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
     export function MotorRun(index: Motors, speed: number): void {
         if (!initialized) {
-            initPCA9685()
+            initMT()
         }
         speed = speed * 16; // map 255 to 4096
         if (speed >= 4096) {
@@ -251,7 +261,7 @@ namespace MTbit {
     //% blockGap=50
     export function MotorStopAll(): void {
         if (!initialized) {
-            initPCA9685()
+            initMT()
         }
         for (let idx = 1; idx <= 4; idx++) {
             stopMotor(idx);
@@ -264,7 +274,9 @@ namespace MTbit {
     //% blockId=MTbit_ultrasonic block="Ultrasonic"
     //% weight=10
     export function Ultrasonic(): number {
-
+        if (!initialized) {
+            initMT()
+        }
         // send pulse
         pins.digitalWritePin(DigitalPin.P14, 0)
         control.waitMicros(2);
@@ -291,6 +303,9 @@ namespace MTbit {
     //% blockId=MTbit_ad_read block="AD_sensor_Read|%index|"
     //% weight=100
     export function AD_sensor_Read(index: ADRead_Ports): number {
+        if (!initialized) {
+            initMT()
+        }
         let val = 0
         if (index == 0x01) {
             val = pins.analogReadPin(AnalogPin.P0)
@@ -309,6 +324,9 @@ namespace MTbit {
     //% blockId=MTbit_ad_write block="AD_PWM_Write|%index|,value %pwm_val"
     //% weight=100
     export function AD_PWM_Write(index: ADWrite_Ports, pwm_val: number): void {
+        if (!initialized) {
+            initMT()
+        }
         if (index == 0x01) {
             pins.analogWritePin(AnalogPin.P0, pwm_val)
         } else if (index == 0x02) {
@@ -326,6 +344,9 @@ namespace MTbit {
     //% blockId=MTbit_DO block="Digtal_Write|%index|,value %do_val"
     //% weight=100
     export function Digtal_Write(index: Normal_Ports, do_val: number): void {
+        if (!initialized) {
+            initMT()
+        }
         if (index == 0x01) {
             pins.digitalWritePin(DigitalPin.P15, do_val)
         } else if (index == 0x02) {
@@ -345,6 +366,9 @@ namespace MTbit {
     //% blockId=MTbit_DI block="Digtal_Read %index"
     //% weight=100
     export function Digtal_Read(index: Normal_Ports): number {
+        if (!initialized) {
+            initMT()
+        }
         let val = 0
         if (index == 0x01) {
             val = pins.digitalReadPin(DigitalPin.P15)
@@ -368,6 +392,9 @@ namespace MTbit {
     //% blockId=MTbit_TrackerIn block="Tracker|%index|,|%index1|Port"
     //% weight=100
     export function TrackerIn_Read(index: Normal_Ports,index1: Tracker_direction): number {
+        if (!initialized) {
+            initMT()
+        }
         let val = 0
         if (index == 0x01) {
             if(index1 == 0x01){
@@ -418,7 +445,7 @@ namespace MTbit {
     //% weight=100
     export function RGB(index: RGB_Ports, R_val: number,G_val: number, B_val: number): void {
         if (!initialized) {
-            initPCA9685()
+            initMT()
         }
         B_val = B_val*4;
         if (B_val >= 4096) {
